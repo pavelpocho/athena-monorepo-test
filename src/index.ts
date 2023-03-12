@@ -138,12 +138,14 @@ async function gitAddAll() {
 }
 
 async function gitCommit(message: string) {
-  return new Promise<boolean>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     exec(`git commit -m "${message}"`, (error, stdout) => {
       if (error) {
         console.log('Commit failed: ', error);
+        resolve(error);
       }
       console.log('Commited.', stdout);
+      resolve(stdout);
     })
   })
 }
@@ -163,16 +165,20 @@ async function gitPush(remoteExists: boolean, branchName: string) {
       exec('git push', (error, stdout) => {
         if (error) {
           console.log('Push failed: ', error);
+          resolve(error);
         }
         console.log('Pushed.', stdout);
+        resolve(stdout);
       })
     }
     else {
       exec(`git push -u origin ${branchName}`, (error, stdout) => {
         if (error) {
           console.log('Push failed: ', error);
+          resolve(error);
         }
         console.log('Pushed.', stdout);
+        resolve(stdout);
       })
     }
   })
