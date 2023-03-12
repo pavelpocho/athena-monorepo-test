@@ -36,7 +36,7 @@ async function createBranch() {
   const pageT = namesWithIds.find(a => a.name == res.branch);
   if (pageT?.id != undefined && pageT?.tags != undefined) {
     await setBranchAsCreated(pageT.id);
-    await checkoutBranch('feature 1');
+    await checkoutBranch(res.branch);
   }
 }
 
