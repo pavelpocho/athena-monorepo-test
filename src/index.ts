@@ -42,7 +42,7 @@ async function createBranch() {
 
 async function checkoutBranch(name: string) {
   return new Promise((resolve, reject) => {
-    exec('git checkout -b "feature_1"', (error, stdout) => {
+    exec(`git checkout -b "${name}"`, (error, stdout) => {
       if (error) {
         console.warn(error);
         reject(error);
@@ -305,26 +305,19 @@ async function setTaskAsComplete(taskPageId: string) {
   });
 }
 
-// mainNotion()
-//   .then(() => process.exit(0))
-//   .catch((err) => {
-//     console.error(err);
-//     process.exit(1);
-//   });
-
-// createBranch()
-//   .then(() => process.exit(0))
-//   .catch((err) => {
-//     console.error(err);
-//     process.exit(1);
-// });
-
-createCommit()
+createBranch()
   .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);
     process.exit(1);
 });
+
+// createCommit()
+//   .then(() => process.exit(0))
+//   .catch((err) => {
+//     console.error(err);
+//     process.exit(1);
+// });
 
 
 // Getting tag ids
