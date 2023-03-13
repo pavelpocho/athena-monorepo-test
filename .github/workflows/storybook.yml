@@ -23,4 +23,4 @@ jobs:
       run: |
         npx concurrently -k -s all -n "SB,TEST" -c "magenta,blue" \
           "npx http-server storybook-static --port 6006 --silent" \
-          "npx wait-on tcp:6006 && npm run test-storybook"
+          "npx wait-port localhost:6006 && npm run test-storybook"
