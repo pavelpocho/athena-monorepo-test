@@ -2,6 +2,7 @@
 
 async function createPR() {
   console.log('other branch');
+  console.log('dev');
 }
 
 createPR()
