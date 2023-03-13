@@ -1,7 +1,27 @@
 // Test GH token: process.env.GH_TOKEN
+import { Octokit } from 'octokit';
+import dotenv from "dotenv";
+
+dotenv.config();
+
+
+const octokit = new Octokit({
+  auth: process.env.GH_TOKEN
+})
 
 async function createPR() {
+  const br = ((await listBranches()) as { data: { name: string }[] }).data.map(a => a.name);
+  console.log(br);
+}
 
+async function listBranches() {
+  return await octokit.request(`GET /repos/${process.env.GH_OWNER}/${process.env.GH_REPO}/branches`, {
+    owner: process.env.GH_OWNER,
+    repo: process.env.GH_REPO,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  })
 }
 
 createPR()
