@@ -311,19 +311,19 @@ async function setTaskAsComplete(taskPageId: string) {
   });
 }
 
-createBranch()
-  .then(() => process.exit(0))
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
-
-// createCommit()
+// createBranch()
 //   .then(() => process.exit(0))
 //   .catch((err) => {
 //     console.error(err);
 //     process.exit(1);
 // });
+
+createCommit()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+});
 
 
 // Getting tag ids
