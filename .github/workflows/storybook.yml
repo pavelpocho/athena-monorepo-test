@@ -19,8 +19,8 @@ jobs:
       working-directory: ./repo-webapp
       run: npm run build-storybook --quiet
     - name: Serve Storybook and run tests
-        working-directory: ./repo-webapp
-        run: |
-          npx concurrently -k -s all -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && npm run test-storybook"
+      working-directory: ./repo-webapp
+      run: |
+        npx concurrently -k -s all -n "SB,TEST" -c "magenta,blue" \
+          "npx http-server storybook-static --port 6006 --silent" \
+          "npx wait-on tcp:6006 && npm run test-storybook"
