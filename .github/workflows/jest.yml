@@ -13,6 +13,7 @@ jobs:
       with:
         node-version: 16
     - name: Install dependencies
+      working-directory: ./repo-webapp
       run: npm i
     - name: Run Jest
       working-directory: ./repo-webapp
