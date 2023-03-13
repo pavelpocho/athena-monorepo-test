@@ -1,10 +1,7 @@
 // Test GH token: process.env.GH_TOKEN
 
 async function createPR() {
-  console.log('other branch');
-  console.log('dev');
-  console.log('other other branch');
-  console.log('different dev');
+
 }
 
 createPR()
