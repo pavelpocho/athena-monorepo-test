@@ -1,0 +1,23 @@
+name: Jest
+on:
+  pull_request:
+    branches:
+      - dev
+jobs:
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install dependencies
+      working-directory: ./repo-webapp
+      run: npm i
+    - name: Run Storybook
+      working-directory: ./repo-webapp
+      run: npm run storybook
+    - name: Test Storybook
+      working-directory: ./repo-webapp
+      run: npm run test-storybook
