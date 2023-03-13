@@ -1,6 +1,7 @@
 // Test GH token: process.env.GH_TOKEN
 import { Octokit } from 'octokit';
 import dotenv from "dotenv";
+import { exec } from "child_process";
 
 dotenv.config();
 
@@ -9,9 +10,55 @@ const octokit = new Octokit({
   auth: process.env.GH_TOKEN
 })
 
-async function createPR() {
+async function main() {
   const br = ((await listBranches()) as { data: { name: string }[] }).data.map(a => a.name);
-  console.log(br);
+  const c_br = await getCurrentBranch();
+  if (!br.includes(c_br)) {
+    console.error('Current branch has not yet been pushed to remote.');
+    return;
+  }
+}
+
+async function createPR() {
+  const questions = [
+    {
+      type: 'input',
+      name: 'title',
+      message: "Please provide the PR title",
+    },
+    {
+      type: 'input',
+      name: 'body',
+      message: "Please provide the PR body",
+    },
+  ]
+
+  const inquirer = await import("inquirer");
+  const res = await inquirer.default.prompt(questions) as { title: string, body: string };
+  console.log(res);
+  await octokit.request(`POST /repos/${process.env.GH_OWNER}/${process.env.GH_REPO}/pulls`, {
+    owner: process.env.GH_OWNER,
+    repo: process.env.GH_REPO,
+    title: res.title,
+    body: res.body,
+    head: 'octocat:new-feature',
+    base: 'master',
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  })
+}
+
+async function getCurrentBranch() {
+  return new Promise<string>((resolve, reject) => {
+    exec('git branch --show-current', (error, stdout) => {
+      if (error) {
+        console.warn(error);
+        reject(error);
+      }
+      resolve(stdout)
+    })
+  });
 }
 
 async function listBranches() {
@@ -24,7 +71,7 @@ async function listBranches() {
   })
 }
 
-createPR()
+main()
   .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);
