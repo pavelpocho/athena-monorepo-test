@@ -14,7 +14,6 @@ jobs:
         node-version: 16
     - name: Install dependencies
       run: npm i
-    - name: Navigate to Webapp directory
-      run: cd repo-webapp
     - name: Run Jest
+      working-directory: ./repo-webapp
       run: npm run test:ci
