@@ -3,6 +3,7 @@
 async function createPR() {
   console.log('other branch');
   console.log('dev');
+  console.log('different dev');
 }
 
 createPR()
