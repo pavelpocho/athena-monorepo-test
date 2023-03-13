@@ -24,8 +24,9 @@ async function main() {
     console.error('Current branch has not yet been pushed to remote.');
     return;
   }
-  console.log(await getBranchDoneTasks(c_br));
-  // await createPR();
+  const tasks = await getBranchDoneTasks(c_br);
+  await setTasksAsPRToDev(tasks.map(t => t.id));
+  await createPR(tasks.map(t => t.name));
 }
 
 async function setTasksAsPRToDev(taskPageIds: string[]) {
@@ -92,7 +93,7 @@ async function getBranchDoneTasks(branchName: string) {
   }));
 }
 
-async function createPR() {
+async function createPR(taskTitles: string[]) {
   const questions = [
     {
       type: 'input',
@@ -113,7 +114,7 @@ async function createPR() {
     owner: process.env.GH_OWNER,
     repo: process.env.GH_REPO,
     title: res.title,
-    body: res.body,
+    body: res.body + `\nTasks completed: ${taskTitles.join(', ')}`,
     head: 'octocat:new-feature',
     base: 'master',
     headers: {
