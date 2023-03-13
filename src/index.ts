@@ -1,5 +1,4 @@
 import { Client } from "@notionhq/client";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import dotenv from "dotenv";
 import { exec } from "child_process";
 import { stdin } from "process";
@@ -184,7 +183,7 @@ async function gitPush(remoteExists: boolean, branchName: string) {
   })
 }
 
-type TagsObject = {
+export type TagsObject = {
   id: string,
   type: string,
   select: {
@@ -192,7 +191,7 @@ type TagsObject = {
   }
 };
 
-type BranchProperties = {
+export type BranchProperties = {
   id: string,
   properties: {
     Tags: TagsObject
@@ -212,7 +211,7 @@ type BranchProperties = {
   }
 }
 
-type TaskProperties = {
+export type TaskProperties = {
   id: string,
   properties: {
     Name: {
@@ -351,6 +350,7 @@ createCommit()
 // Not started: adc51459-4fed-4fb9-b51c-fa824d5d6a75
 // In progress: c36b3bf1-2229-4ea6-9184-dd8657b5d6b5
 // Done: 40a6a895-b297-4abf-ab7c-930620b720c6
+// PR to Dev: SH?W
 
 // async function test() {
 //   const db = await notion.databases.retrieve({
