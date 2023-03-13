@@ -26,7 +26,7 @@ async function main() {
   }
   const tasks = await getBranchDoneTasks(c_br);
   await setTasksAsPRToDev(tasks.map(t => t.id));
-  await createPR(tasks.map(t => t.name));
+  await createPR(tasks.map(t => t.name), c_br);
 }
 
 async function setTasksAsPRToDev(taskPageIds: string[]) {
@@ -93,7 +93,7 @@ async function getBranchDoneTasks(branchName: string) {
   }));
 }
 
-async function createPR(taskTitles: string[]) {
+async function createPR(taskTitles: string[], branch: string) {
   const questions = [
     {
       type: 'input',
@@ -115,8 +115,8 @@ async function createPR(taskTitles: string[]) {
     repo: process.env.GH_REPO,
     title: res.title,
     body: res.body + `\nTasks completed: ${taskTitles.join(', ')}`,
-    head: 'octocat:new-feature',
-    base: 'master',
+    head: branch,
+    base: 'dev',
     headers: {
       'X-GitHub-Api-Version': '2022-11-28'
     }
