@@ -19,6 +19,8 @@ jobs:
     - name: Inform Notion of PR merge
       env:
         NOTION_API_KEY: ${{secrets.NOTION_API_KEY}}
+        BRANCHES_DB_ID: ${{secrets.BRANCHES_DB_ID}}
+        TASKS_DB_ID: ${{secrets.TASKS_DB_ID}}
       run: npm run pull-merge -- ${{github.head_ref}}
 
 
