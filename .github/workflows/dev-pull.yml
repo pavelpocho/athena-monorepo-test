@@ -1,0 +1,28 @@
+name: Jest
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - dev
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install admin dependencies
+      run: npm i
+    - name: Inform Notion of PR merge
+      env:
+        NOTION_API_KEY: ${{secrets.NOTION_API_KEY}}
+        BRANCHES_DB_ID: ${{secrets.BRANCHES_DB_ID}}
+        TASKS_DB_ID: ${{secrets.TASKS_DB_ID}}
+      run: npm run pull-merge -- ${{github.head_ref}}
+
+
+# This is how you get the name of the branch
+# that is merged into dev --> for Notion
