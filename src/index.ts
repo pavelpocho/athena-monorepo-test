@@ -279,10 +279,17 @@ async function getBranchTasks(branchName: string) {
   const taskResponse = await notion.databases.query({
     database_id: process.env.TASKS_DB_ID ?? '',
     filter: {
-      property: 'Branch',
-      relation: {
-        contains: branchId
-      }
+      and: [{
+        property: 'Branch',
+        relation: {
+          contains: branchId
+        }
+      }, {
+        property: 'Status',
+        status: {
+          equals: 'Not Started'
+        }
+      }]
     }
   });
   const taskRes = taskResponse.results.map(a => ({
@@ -351,6 +358,7 @@ createCommit()
 // In progress: c36b3bf1-2229-4ea6-9184-dd8657b5d6b5
 // Done: 40a6a895-b297-4abf-ab7c-930620b720c6
 // PR to Dev: SH?W
+// Dev: HkV>
 
 // async function test() {
 //   const db = await notion.databases.retrieve({

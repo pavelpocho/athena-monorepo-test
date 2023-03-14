@@ -10,7 +10,8 @@
     "create-pr": "ts-node src/create_pr.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "pull-merge": "ts-node src/pull-merge.ts"
   },
   "keywords": [],
   "author": "",
